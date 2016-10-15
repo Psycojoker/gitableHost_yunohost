@@ -32,7 +32,8 @@ source /usr/share/yunohost/helpers
 # Save app settings
 
 ynh_app_setting_set "$app" is_public "$is_public"
-
+usersalt=$(date +%s | sha256sum | base64 | head -c 32 ; echo) 
+userpassword=(perl -e 'print crypt($input_pass,$usersalt),"\n"') 
 
 # Check domain/path availability
 sudo yunohost app checkurl "${domain}${path}" -a "$app" \
@@ -47,8 +48,7 @@ sudo cp $nginx_conf /etc/nginx/conf.d/$domain.d/$app.conf
 
 
 ## create git repo and such 
-
-sudo useradd -m -s /usr/bin/git-shell -d $src_path git -p $input_pass
+sudo useradd -m -s /usr/bin/git-shell -d $src_path git -p $userpassword
 sudo mkdir -p $work_path
 sudo mkdir -p $code_path
 sudo git init --bare $code_path
