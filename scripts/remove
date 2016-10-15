@@ -10,7 +10,7 @@ sudo userdel git
 domain=$(ynh_app_setting_get "$app" domain)
 
 # Remove sources
-sudo rm -rf /var/www/$app
+sudo rm -rf /home/yunohost.app/$app
 
 # Remove nginx configuration file
 sudo rm -f /etc/nginx/conf.d/$domain.d/$app.conf
