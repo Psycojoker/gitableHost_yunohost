@@ -21,7 +21,9 @@ path=$YNH_APP_ARG_PATH
 admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
 language=$YNH_APP_ARG_LANGUAGE
-
+src_path=/home/yunohost.app/$app
+work_path=/home/yunohost.app/$app/githost
+code_path=/home/yunohost.app/$app/gitsourcecode
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
@@ -34,53 +36,44 @@ ynh_app_setting_set "$app" language "$language"
 sudo yunohost app checkurl "${domain}${path}" -a "$app" \
     || ynh_die "Path not available: ${domain}${path}"
 
-# Copy source files
-src_path=/var/www/$app
-sudo mkdir -p $src_path
-sudo cp -a ../sources/. $src_path
-
-# Set permissions to app files
-# you may need to make some file and/or directory writeable by www-data (nginx user)
-sudo chown -R root: $src_path
-
-### MySQL (can be removed if not used) ###
-# If your app use a MySQL database you can use these lines to bootstrap
-# a database, an associated user and save the password in app settings.
-#
-# # Generate MySQL password and create database
-# dbuser=$app
-# dbname=$app
-# dbpass=$(ynh_string_random 12)
-# ynh_app_setting_set "$app" mysqlpwd "$dbpass"
-# ynh_mysql_create_db "$dbname" "$dbuser" "$dbpass"
-#
-# # Load initial SQL into the new database
-# ynh_mysql_connect_as "$dbuser" "$dbpass" "$dbname" \
-#     < "../sources/sql/mysql.init.sql"
-### MySQL end ###
 
 # Modify Nginx configuration file and copy it to Nginx conf directory
 nginx_conf=../conf/nginx.conf
 sed -i "s@YNH_WWW_PATH@$path@g" $nginx_conf
 sed -i "s@YNH_WWW_ALIAS@$src_path/@g" $nginx_conf
-# If a dedicated php-fpm process is used:
-# Don't forget to modify ../conf/nginx.conf accordingly or your app will not work!
-# sed -i "s@YNH_WWW_APP@$app@g" $nginx_conf
 sudo cp $nginx_conf /etc/nginx/conf.d/$domain.d/$app.conf
 
-### PHP (can be removed if not used) ###
-# If a dedicated php-fpm process is used:
-# Don't forget to modify ../conf/php-fpm.conf accordingly or your app will not work!
-#
-# # Modify PHP-FPM pool configuration and copy it to the pool directory
-# sed -i "s@YNH_WWW_APP@$app@g" ../conf/php-fpm.conf
-# sed -i "s@YNH_WWW_ALIAS@$src_path/@g" ../conf/php-fpm.conf
-# finalphpconf=/etc/php5/fpm/pool.d/$app.conf
-# sudo cp ../conf/php-fpm.conf $finalphpconf
-# sudo chown root: $finalphpconf
-# sudo chmod 644 $finalphpconf
-# sudo service php5-fpm reload
-### PHP end ###
+
+## create git repo and such 
+
+sudo useradd -m -s /usr/bin/git-shell -d $src_path git
+sudo mkdir -p $work_path
+sudo mkdir -p $code_path
+sudo git init --bare $code_path
+sudo rm -v $code_path/hooks/*
+
+## copy files over and make execuable 
+sudo cp -av post-receive /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
+sudo chmod +x /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
+
+
+## setup .ssh key and permissions for the folder
+sudo mkdir -p $src_path/.ssh
+sudo touch $src_path/.ssh/authorized_keys
+echo -e $ssh_pubkey > authorized_keys
+sudo cp authorized_keys $src_path/.ssh/
+cd $src_path
+sudo chmod 755 $src_path/.ssh
+sudo chmod 644 $src_path/.ssh/authorized_keys
+sudo chown git:git $src_path
+
+
+
+## set up HTML
+# sudo sed -i "s@ADDDOMAINNAME@$domain@g" index.html
+# sudo sed -i "s@PATHNAME@$path@g" index.html
+sudo cp index.html  /home/yunohost.app/$app/gitwebhost/
+
 
 # If app is public, add url to SSOWat conf as skipped_uris
 if [[ $is_public -eq 1 ]]; then
