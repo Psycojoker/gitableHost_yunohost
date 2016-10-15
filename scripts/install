@@ -25,8 +25,7 @@ work_path=/home/yunohost.app/$app/githost
 code_path=/home/yunohost.app/$app/gitsourcecode
 
 ##create new password from users input
-salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
-userpassword=(perl -e 'print crypt($input_pass, $salt),"\n"')
+userpassword=(perl -e 'print crypt($input_pass, $input_pass),"\n"')
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
