@@ -53,7 +53,7 @@ sudo rm -v $code_path/hooks/*
 
 ## copy files over and make execuable 
 cd ../sources
-cp post-receive.sh /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
+sudo cp post-receive.sh /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
 sudo chmod +x /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
 
 
