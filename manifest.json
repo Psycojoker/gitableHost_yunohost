@@ -3,7 +3,7 @@
     "id": "gitable",
     "packaging_format": 1,
     "description": {
-        "en": "use git control static websites",
+        "en": "use git version control on static websites",
         "fr": "Exemple de package d’application pour YunoHost."
     },
     "url": "https://example.com",

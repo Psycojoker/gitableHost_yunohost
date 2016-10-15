@@ -65,14 +65,10 @@ sudo mkdir -p $src_path/.ssh
 sudo touch $src_path/.ssh/authorized_keys
 echo -e $ssh_pubkey > authorized_keys
 sudo cp authorized_keys $src_path/.ssh/
-cd $src_path
+
 sudo chmod 755 $src_path/.ssh
 sudo chmod 644 $src_path/.ssh/authorized_keys
 sudo chown git:git $src_path
-
-
-
-
 
 
 # If app is public, add url to SSOWat conf as skipped_uris
