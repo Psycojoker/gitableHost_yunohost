@@ -56,7 +56,10 @@ cd ../sources
 sudo cp post-receive.sh $code_path/hooks/post-receive
 sudo chmod +x /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
 
-
+## set up HTML
+# sudo sed -i "s@ADDDOMAINNAME@$domain@g" index.html
+# sudo sed -i "s@PATHNAME@$path@g" index.html
+sudo cp index.html  $work_path/
 ## setup .ssh key and permissions for the folder
 sudo mkdir -p $src_path/.ssh
 sudo touch $src_path/.ssh/authorized_keys
@@ -69,10 +72,7 @@ sudo chown git:git $src_path
 
 
 
-## set up HTML
-# sudo sed -i "s@ADDDOMAINNAME@$domain@g" index.html
-# sudo sed -i "s@PATHNAME@$path@g" index.html
-sudo cp index.html  /home/yunohost.app/$app/gitwebhost/
+
 
 
 # If app is public, add url to SSOWat conf as skipped_uris
