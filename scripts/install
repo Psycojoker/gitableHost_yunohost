@@ -26,8 +26,7 @@ code_path=/home/yunohost.app/$app/gitsourcecode
 
 ##create new password from users input
 
-userpassword=(perl -e 'print crypt($input_pass,saltnpepper),"\n"') 
-
+echo "git:$input_pass" | chpasswd 
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
