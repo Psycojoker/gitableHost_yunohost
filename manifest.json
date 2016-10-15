@@ -53,12 +53,12 @@
                 "default": true
             },
             {
-                "name": "ssh_pubkey",
+                "name": "userpassword",
                 "ask": {
-                    "en": "paste public key",
+                    "en": "Enter a password for ssh/git",
                     "fr": "paste public key"
                 },
-                "example": "ssh-rsa AAAAB3NzaC1yc2EAAA"
+                "example": "super_secret_password"
                 
             }
         ]

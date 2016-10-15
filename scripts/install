@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit on command errors and treat unset variables as an error
-set -e
+set -eu
 
 # This is a multi-instance app, meaning it can be installed several times independently
 # The id of the app as stated in the manifest is available as $YNH_APP_ID
@@ -20,9 +20,14 @@ domain=$YNH_APP_ARG_DOMAIN
 path=$YNH_APP_ARG_PATH
 is_public=$YNH_APP_ARG_IS_PUBLIC
 language=$YNH_APP_ARG_LANGUAGE
+input_pass=$4
 src_path=/home/yunohost.app/$app
 work_path=/home/yunohost.app/$app/githost
 code_path=/home/yunohost.app/$app/gitsourcecode
+
+##create new password from users input
+salt=$(cat /dev/urandom | tr -dc 'a-zA-Z0-9' | fold -w 32 | head -n 1)
+userpassword=(perl -e 'print crypt($input_pass, $salt),"\n"')
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
@@ -45,7 +50,7 @@ sudo cp $nginx_conf /etc/nginx/conf.d/$domain.d/$app.conf
 
 ## create git repo and such 
 
-sudo useradd -m -s /usr/bin/git-shell -d $src_path git
+sudo useradd -m -s /usr/bin/git-shell -d $src_path git -p $userpassword
 sudo mkdir -p $work_path
 sudo mkdir -p $code_path
 sudo git init --bare $code_path
@@ -61,14 +66,18 @@ sudo chmod +x /home/yunohost.app/$app/gitsourcecode/hooks/post-receive
 # sudo sed -i "s@PATHNAME@$path@g" index.html
 sudo cp index.html  $work_path/
 ## setup .ssh key and permissions for the folder
-sudo mkdir -p $src_path/.ssh
-sudo touch $src_path/.ssh/authorized_keys
-echo -e $ssh_pubkey > authorized_keys
-sudo cp authorized_keys $src_path/.ssh/
 
-sudo chmod 755 $src_path/.ssh
-sudo chmod 644 $src_path/.ssh/authorized_keys
-sudo chown git:git $src_path
+
+
+
+# sudo mkdir -p $src_path/.ssh
+# sudo touch $src_path/.ssh/authorized_keys
+# echo -e $ssh_pubkey > authorized_keys
+# sudo cp authorized_keys $src_path/.ssh/
+
+# sudo chmod 755 $src_path/.ssh
+# sudo chmod 644 $src_path/.ssh/authorized_keys
+# sudo chown git:git $src_path
 
 
 # If app is public, add url to SSOWat conf as skipped_uris
