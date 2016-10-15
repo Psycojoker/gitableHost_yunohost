@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # Exit on command errors and treat unset variables as an error
-set -eu
+set -e
 
 # This is a multi-instance app, meaning it can be installed several times independently
 # The id of the app as stated in the manifest is available as $YNH_APP_ID
@@ -18,7 +18,6 @@ app=$YNH_APP_INSTANCE_NAME
 # Retrieve arguments
 domain=$YNH_APP_ARG_DOMAIN
 path=$YNH_APP_ARG_PATH
-admin=$YNH_APP_ARG_ADMIN
 is_public=$YNH_APP_ARG_IS_PUBLIC
 language=$YNH_APP_ARG_LANGUAGE
 src_path=/home/yunohost.app/$app
