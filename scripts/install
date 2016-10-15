@@ -30,7 +30,7 @@ userpassword=(perl -e 'print crypt($input_pass, $input_pass),"\n"')
 source /usr/share/yunohost/helpers
 
 # Save app settings
-ynh_app_setting_set "$app" admin "$admin"
+
 ynh_app_setting_set "$app" is_public "$is_public"
 ynh_app_setting_set "$app" language "$language"
 
