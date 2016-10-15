@@ -25,7 +25,9 @@ work_path=/home/yunohost.app/$app/githost
 code_path=/home/yunohost.app/$app/gitsourcecode
 
 ##create new password from users input
-userpassword=$(date +%s | sha256sum | base64 | head -c 32 ; echo)
+salt=$lemontrees
+userpassword=(perl -e 'print crypt($input_pass, $salt),"\n"') 
+
 # Source YunoHost helpers
 source /usr/share/yunohost/helpers
 
