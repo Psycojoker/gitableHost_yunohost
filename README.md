@@ -16,7 +16,6 @@
 - git commit -a -m "my first commit"
 - git push #login with the password you set at install
 - server then uses a hook to sync to /home/yunohost.app/gitable/githost/
-- 
 
 ### does it work yet?
 - -No-  kinda, yesh but still beta
