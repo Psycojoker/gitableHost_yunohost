@@ -1,4 +1,4 @@
-#!/bin/bash
+  #!/bin/bash
 #
 # Author: "FRITZ Thomas" <fritztho@gmail.com> (http://www.fritzthomas.com)
 # GitHub: https://gist.github.com/thomasfr/9691385
@@ -31,7 +31,7 @@
 export DEPLOY_APP_NAME=`whoami`
 
 # This is the root deploy dir.
-export DEPLOY_ROOT="${HOME}/gitwebhost"
+export DEPLOY_ROOT="${HOME}/githost"
 
 # When receiving a new git push, the received branch gets compared to this one.
 # If you do not need this, just add a comment
