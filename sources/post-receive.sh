@@ -1,4 +1,4 @@
-  #!/bin/bash
+#!/bin/bash
 #
 # Author: "FRITZ Thomas" <fritztho@gmail.com> (http://www.fritzthomas.com)
 # GitHub: https://gist.github.com/thomasfr/9691385
