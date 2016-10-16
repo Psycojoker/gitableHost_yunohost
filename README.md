@@ -18,7 +18,7 @@
 - server then uses a hook to sync to /home/yunohost.app/gitable/githost/
 
 ### does it work yet?
-- -No-  kinda, yesh but still beta
+- -No-  kinda, but still beta
 
 Makes use of the following scripts
 - post-receive.sh
