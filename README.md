@@ -12,9 +12,9 @@
 
 ### Usage
 - write static page or something like Pelican, jekyllrb, octopress, Hugo and many many more!
-- git remote add origin git@hostname:~/gitsourcecode/
-- git commit -a -m "my first commit"
-- git push #login with the password you set at install
+- ```git remote add origin git@hostname:~/gitsourcecode/```
+- ```git commit -a -m "my first commit"```
+- ```git push``` #login with the password you set at install
 - server then uses a hook to sync to /home/yunohost.app/gitable/githost/
 - 
 
@@ -25,3 +25,6 @@ Makes use of the following scripts
 - post-receive.sh
 - Author: "FRITZ Thomas" <fritztho@gmail.com> (http://www.fritzthomas.com)
 - GitHub: https://gist.github.com/thomasfr/9691385
+
+
+a demo can be found at https://youtu.be/P9JbgRm26Kk
