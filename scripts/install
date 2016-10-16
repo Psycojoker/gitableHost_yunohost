@@ -53,7 +53,7 @@ sudo cp $nginx_conf /etc/nginx/conf.d/$domain.d/$app.conf
 ## create git repo and such 
 
 sudo useradd -m -s /usr/bin/git-shell -d $src_path git
-userpassword=$(echo git:foo | chpasswd  -c SHA512)
+sudo echo git:foo | chpasswd  -c SHA512
 sudo mkdir -p $work_path
 sudo mkdir -p $code_path
 sudo git init --bare $code_path
