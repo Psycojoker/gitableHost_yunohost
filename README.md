@@ -1,7 +1,7 @@
 #gitable-host
 
 ## Warning this is still a Work in progess!
-#### it might never work!
+#### it kinda works now, Still beta!
 
 ## YunoHost git repo for webhosting
 
