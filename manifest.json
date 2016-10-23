@@ -56,7 +56,7 @@
                 "name": "userpassword",
                 "ask": {
                     "en": "Enter a password for ssh/git",
-                    "fr": "paste public key"
+                    "fr": "Choisissez un mot de passe pour ssh/git"
                 },
                 "example": "super_secret_password"
                 
