@@ -68,6 +68,7 @@ sudo chown git:git -Rf $src_path
 # sudo sed -i "s@ADDDOMAINNAME@$domain@g" index.html
 # sudo sed -i "s@PATHNAME@$path@g" index.html
 sudo cp index.html  $work_path/
+sudo sed -i "s/hosntame/${domain}/" $work_path/index.html
 ## setup .ssh key and permissions for the folder
 
 
